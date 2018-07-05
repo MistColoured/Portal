@@ -1,43 +1,44 @@
 import React, { Component } from 'react';
-
-import Modal from './Portal/Portal';
+import MyPortal from './Portal/MyPortal';
 
 class App extends Component {
   state = {
-    showModal: false,
-  };
-
-  handleShow = () => {
-    this.setState({ showModal: true });
+    count: 0,
+    showWindow: false,
   }
 
-  handleHide = () => {
-    this.setState({ showModal: false });
+  componentDidMount() {
+    this.timerId = setInterval(() => {
+      this.setState(prevState => ({
+        count: prevState.count + 1,
+      }));
+    }, 1000);
+  }
+
+  handleToggle = () => {
+    this.setState(prevState => ({
+      showWindow: !prevState.showWindow,
+    }));
   }
 
   render() {
-    const { showModal } = this.state;
-    // Show a Modal on click.
-    // (In a real app, don't forget to use ARIA attributes
-    // for accessibility!)
-    const modal = showModal ? (
-      <Modal>
-        <div>
-          <div>
-            With a portal, we can render content into a different
-            part of the DOM, as if it were any other React child.
-          </div>
-          This is being rendered inside the #modal-container div.
-          <button onClick={this.handleHide}>Hide modal</button>
-        </div>
-      </Modal>
-    ) : null;
-
+    const { count, showWindow } = this.state;
     return (
-      <div className="app">
-        This div has overflow: hidden.
-        <button onClick={this.handleShow}>Show modal</button>
-        {modal}
+      <div>
+        <h1>
+          {count}
+        </h1>
+        <button onClick={this.handleToggle}>
+          {showWindow ? 'Hide' : 'Show'} the window
+        </button>
+        {showWindow && (
+          <MyPortal>
+            <h1>{count}</h1>
+            <button onClick={() => this.handleToggle()}>
+              Close Me!
+            </button>
+          </MyPortal>
+        )}
       </div>
     );
   }
