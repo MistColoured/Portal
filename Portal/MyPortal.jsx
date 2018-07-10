@@ -1,23 +1,22 @@
 import { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-class MyPortal extends Component {
+class Portal extends Component {
   el = document.createElement('div')
 
   componentDidMount() {
-    this.externalWindow = window.open('', '', 'width=400,height=400, top=200, left=200');
-    this.externalWindow.document.body.appendChild(this.el);
+    this.external = window.open('', '', 'height=400,width=400,top=200,left=200');
+    this.external.document.body.appendChild(this.el);
   }
 
-  componentWillUnmount() {
-    this.externalWindow.close();
+  componentWillUnmount = () => {
+    this.external.close();
   }
 
   render() {
     // eslint-disable-next-line
-    const { children } = this.props;
-    return ReactDOM.createPortal(children, this.el);
+    return ReactDOM.createPortal(this.props.children, this.el);
   }
 }
 
-export default MyPortal;
+export default Portal;

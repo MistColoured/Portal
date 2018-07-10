@@ -3,11 +3,11 @@ import MyPortal from './Portal/MyPortal';
 
 class App extends Component {
   state = {
-    count: 0,
-    showWindow: false,
+    show: false,
+    count: 27,
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.timerId = setInterval(() => {
       this.setState(prevState => ({
         count: prevState.count + 1,
@@ -17,28 +17,21 @@ class App extends Component {
 
   handleToggle = () => {
     this.setState(prevState => ({
-      showWindow: !prevState.showWindow,
+      show: !prevState.show,
     }));
   }
 
   render() {
-    const { count, showWindow } = this.state;
+    const { count, show } = this.state;
     return (
       <div>
-        <h1>
-          {count}
-        </h1>
-        <button onClick={this.handleToggle}>
-          {showWindow ? 'Hide' : 'Show'} the window
-        </button>
-        {showWindow && (
+        <button onClick={this.handleToggle}>Click Me</button>
+        {count}
+        {show && (
           <MyPortal>
-            <h1>{count}</h1>
-            <button onClick={() => this.handleToggle()}>
-              Close Me!
-            </button>
-          </MyPortal>
-        )}
+            I am an external window
+            {count}
+          </MyPortal>)}
       </div>
     );
   }
