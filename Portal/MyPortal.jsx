@@ -5,7 +5,7 @@ class Portal extends Component {
   el = document.createElement('div')
 
   componentDidMount() {
-    this.external = window.open('', '', 'height=400,width=400,top=200,left=200');
+    this.external = window.open('', '', 'width=400,height=400,top=200,left=200');
     this.external.document.body.appendChild(this.el);
   }
 
@@ -15,7 +15,8 @@ class Portal extends Component {
 
   render() {
     // eslint-disable-next-line
-    return ReactDOM.createPortal(this.props.children, this.el);
+    const { children } = this.props;
+    return ReactDOM.createPortal(children, this.el);
   }
 }
 
